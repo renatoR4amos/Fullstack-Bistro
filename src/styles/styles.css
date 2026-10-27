@@ -1,0 +1,384 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* paleta sobria de restaurante: carbon mate, ambar calido y lineas limpias */
+:root {
+    --bg-dark: #0b0e14;
+    --bg-surface: #121722;
+    --bg-card: #18202e;
+    --bg-card-hover: #1e283a;
+    --color-text: #f3f4f6;
+    --color-muted: #cbd5e1;
+    --color-borde: rgba(255, 255, 255, 0.08);
+    --color-borde-focus: rgba(245, 158, 11, 0.5);
+    --color-ambar: #f59e0b;
+    --color-ambar-hover: #d97706;
+    --color-verde: #10b981;
+    --color-rojo: #ef4444;
+    --font-title: 'Bebas Neue', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    letter-spacing: -0.2px;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+h1, h2, h3, .brand-font {
+    font-family: var(--font-title);
+    letter-spacing: 1.5px;
+}
+
+/* barra superior */
+.site-header nav {
+    background: rgba(11, 14, 20, 0.95) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.navbar-brand {
+    font-family: var(--font-title);
+    font-size: 1.7rem;
+    letter-spacing: 2px;
+    color: var(--color-text) !important;
+}
+
+.navbar-brand span {
+    color: var(--color-ambar);
+}
+
+.nav-link {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-muted) !important;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--color-text) !important;
+}
+
+/* boton de carrito en barra */
+.btn-carrito-nav {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-borde);
+    color: var(--color-text);
+    border-radius: 8px;
+    padding: 0.45rem 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-carrito-nav:hover {
+    background-color: rgba(245, 158, 11, 0.12);
+    border-color: var(--color-ambar);
+    color: #ffffff;
+}
+
+/* portada */
+.hero-section {
+    background: linear-gradient(180deg, rgba(11, 14, 20, 0.82) 0%, rgba(11, 14, 20, 0.98) 100%), url('/img/local_real.jpg') center/cover no-repeat;
+    border-bottom: 1px solid var(--color-borde);
+    padding: 5rem 0 4.5rem;
+}
+
+.hero-title {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+}
+
+.hero-title span {
+    color: var(--color-ambar);
+}
+
+/* botones de accion */
+.btn-neon {
+    background-color: var(--color-ambar);
+    border: 1px solid var(--color-ambar);
+    color: #0b0e14;
+    font-family: var(--font-title);
+    font-size: 1.2rem;
+    letter-spacing: 1.5px;
+    padding: 0.6rem 1.6rem;
+    border-radius: 6px;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+
+.btn-neon:hover, .btn-neon:focus {
+    background-color: var(--color-ambar-hover);
+    border-color: var(--color-ambar-hover);
+    color: #0b0e14;
+    transform: translateY(-1px);
+}
+
+.btn-neon-outline {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-text);
+    font-family: var(--font-title);
+    font-size: 1.2rem;
+    letter-spacing: 1.5px;
+    padding: 0.6rem 1.6rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-neon-outline:hover {
+    border-color: var(--color-ambar);
+    color: var(--color-ambar);
+    background: rgba(245, 158, 11, 0.08);
+    transform: translateY(-1px);
+}
+
+/* tarjetas de platos */
+.custom-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--color-borde);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(245, 158, 11, 0.4);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+}
+
+.custom-card img {
+    height: 220px;
+    object-fit: cover;
+    width: 100%;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.card-title {
+    font-family: var(--font-body);
+    font-weight: 700;
+}
+
+.precio-plato {
+    color: var(--color-ambar);
+    font-weight: 800;
+    font-size: 1.2rem;
+}
+
+/* badges de categoria */
+.badge-categoria {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.35rem 0.65rem;
+    border-radius: 4px;
+}
+
+.badge-barcos { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+.badge-burger { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+.badge-entradas { background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); }
+.badge-bowls { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+.badge-acomp { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+.badge-bebidas { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+
+/* filtros de categoria */
+.btn-filtro {
+    border-radius: 20px;
+    padding: 0.4rem 1.1rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border: 1px solid var(--color-borde);
+    background-color: var(--bg-surface);
+    color: var(--color-muted);
+    transition: all 0.2s ease;
+}
+
+.btn-filtro:hover {
+    color: var(--color-text);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-filtro.active {
+    background-color: var(--color-ambar);
+    color: #0b0e14;
+    border-color: var(--color-ambar);
+    font-weight: 700;
+}
+
+/* contenedor gif */
+.frame-gif {
+    border: 1px solid var(--color-borde);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    background: #000000;
+}
+
+.frame-gif img {
+    width: 100%;
+    max-height: 480px;
+    object-fit: cover;
+    display: block;
+}
+
+/* boton whatsapp */
+.btn-whatsapp {
+    background-color: #25D366;
+    border: 1px solid #25D366;
+    color: #ffffff;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+
+.btn-whatsapp:hover {
+    background-color: #1ebc59;
+    color: #ffffff;
+}
+
+/* formularios y tarjetas de registro */
+.form-card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--color-borde);
+    border-radius: 12px;
+}
+
+.form-control, .form-select {
+    background-color: var(--bg-card);
+    border: 1px solid var(--color-borde);
+    color: var(--color-text);
+    border-radius: 6px;
+    padding: 0.6rem 0.85rem;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--bg-card);
+    border-color: var(--color-ambar);
+    color: var(--color-text);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+}
+
+.form-control::placeholder {
+    color: #6b7280;
+}
+
+.error-msg {
+    color: #ef4444;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+/* selectores de cantidad stepper */
+.btn-stepper {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--color-borde);
+    color: var(--color-text);
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.btn-stepper:hover {
+    background: var(--color-ambar);
+    color: #0b0e14;
+    border-color: var(--color-ambar);
+}
+
+.input-stepper {
+    width: 38px;
+    text-align: center;
+    background: transparent;
+    border: none;
+    color: var(--color-text);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+/* pestanas nav tabs para reservas y consulta */
+.nav-pills-bistro .nav-link {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--color-borde);
+    color: var(--color-muted) !important;
+    border-radius: 8px;
+    padding: 0.6rem 1.4rem;
+    font-weight: 700;
+    margin-right: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.nav-pills-bistro .nav-link.active {
+    background: var(--color-ambar) !important;
+    color: #0b0e14 !important;
+    border-color: var(--color-ambar);
+}
+
+/* comprobante de reserva / voucher */
+.voucher-card {
+    background: #141b27;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+}
+
+.voucher-codigo {
+    font-family: var(--font-title);
+    font-size: 2.2rem;
+    letter-spacing: 2px;
+    color: var(--color-ambar);
+}
+
+/* modales */
+.modal-content {
+    background-color: var(--bg-surface);
+    color: var(--color-text);
+}
+
+/* pie de pagina */
+.site-footer {
+    border-top: 1px solid var(--color-borde);
+    background-color: #080a0f;
+}
+
+/* clases de alto contraste y legibilidad */
+.text-muted {
+    color: #cbd5e1 !important;
+}
+
+.subtitulo-dashboard {
+    color: #cbd5e1 !important;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.etiqueta-metrica {
+    color: #f1f5f9 !important;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.35rem;
+}
+
+.card-desc {
+    color: #cbd5e1 !important;
+    font-size: 0.86rem;
+    line-height: 1.45;
+}

@@ -1,7 +1,7 @@
 // src/services/dataService.js
 // Servicio de datos simulado y persistencia en localStorage para Restaurante Bistro
 
-import { supabase, isSupabaseConfigured } from './supabaseClient';
+import { supabase, isSupabaseConfigured } from './supabaseClient.js';
 
 export const PLATOS_INICIALES = [
   {

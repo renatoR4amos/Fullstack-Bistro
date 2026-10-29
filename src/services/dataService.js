@@ -1,6 +1,8 @@
 // src/services/dataService.js
 // Servicio de datos simulado y persistencia en localStorage para Restaurante Bistro
 
+import { supabase, isSupabaseConfigured } from './supabaseClient';
+
 export const PLATOS_INICIALES = [
   {
     id: 1,
@@ -440,13 +442,30 @@ export function cerrarSesion() {
   localStorage.removeItem(KEYS.SESION);
 }
 
-// ----------------- CRUD RESERVAS -----------------
+// ----------------- CRUD RESERVAS (LOCAL + SUPABASE) -----------------
 export function getReservas() {
   initStorage();
   return readStorage(KEYS.RESERVAS, []);
 }
 
-export function crearReserva(reservaData) {
+export async function getReservasRemotas() {
+  if (isSupabaseConfigured && supabase) {
+    try {
+      const { data, error } = await supabase
+        .from('reservas_usuarios')
+        .select('*')
+        .order('id', { ascending: false });
+      if (!error && data) {
+        return data;
+      }
+    } catch (e) {
+      console.warn('Fallo al obtener reservas desde Supabase:', e.message);
+    }
+  }
+  return getReservas();
+}
+
+export async function crearReserva(reservaData) {
   const reservas = getReservas();
   const codigo = "RES-" + Math.random().toString(36).substring(2, 7).toUpperCase();
   const nueva = {
@@ -456,12 +475,50 @@ export function crearReserva(reservaData) {
   };
   reservas.push(nueva);
   writeStorage(KEYS.RESERVAS, reservas);
+
+  // Sincronización con Supabase si las credenciales están presentes
+  if (isSupabaseConfigured && supabase) {
+    try {
+      const { error } = await supabase
+        .from('reservas_usuarios')
+        .insert([{
+          codigo: nueva.codigo,
+          nombre: nueva.nombre,
+          correo: nueva.correo,
+          telefono: nueva.telefono || '',
+          personas: Number(nueva.personas) || 2,
+          fecha: nueva.fecha,
+          hora: nueva.hora,
+          preorden: nueva.preorden || [],
+          total_preorden: Number(nueva.totalPreorden) || 0
+        }]);
+      if (error) {
+        console.warn('Supabase error:', error.message);
+      }
+    } catch (err) {
+      console.warn('Error de conexión a Supabase:', err.message);
+    }
+  }
+
   return nueva;
 }
 
-export function eliminarReserva(id) {
+export async function eliminarReserva(id) {
   let reservas = getReservas();
+  const target = reservas.find(r => r.id === Number(id));
   reservas = reservas.filter(r => r.id !== Number(id));
   writeStorage(KEYS.RESERVAS, reservas);
+
+  if (isSupabaseConfigured && supabase && target) {
+    try {
+      await supabase
+        .from('reservas_usuarios')
+        .delete()
+        .eq('codigo', target.codigo);
+    } catch (e) {
+      console.warn('Error eliminando de Supabase:', e.message);
+    }
+  }
+
   return reservas;
 }

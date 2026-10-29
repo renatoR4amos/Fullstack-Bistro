@@ -81,7 +81,7 @@ export default function Registro() {
     }
   };
 
-  const handleReservaSubmit = (e) => {
+  const handleReservaSubmit = async (e) => {
     e.preventDefault();
     const itemsPreorden = Object.entries(preorden)
       .filter(([_, cant]) => cant > 0)
@@ -97,7 +97,7 @@ export default function Registro() {
 
     const totalPreorden = itemsPreorden.reduce((s, it) => s + (it.precio * it.cantidad), 0);
 
-    const nueva = crearReserva({
+    const nueva = await crearReserva({
       nombre: reservaForm.nombre || currentUser?.nombre || 'Cliente Bistró',
       correo: reservaForm.correo || currentUser?.correo || '',
       telefono: reservaForm.telefono || currentUser?.telefono || '',

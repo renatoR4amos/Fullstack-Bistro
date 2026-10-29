@@ -476,6 +476,27 @@ export async function crearReserva(reservaData) {
   reservas.push(nueva);
   writeStorage(KEYS.RESERVAS, reservas);
 
+  // Registrar automáticamente al cliente en la base de usuarios si no existe
+  try {
+    const usuarios = getUsuarios();
+    const existe = usuarios.some(u => u.correo === nueva.correo || (nueva.telefono && u.telefono === nueva.telefono));
+    if (!existe && nueva.correo) {
+      usuarios.push({
+        rut: `RES-${String(Date.now()).slice(-6)}`,
+        nombre: nueva.nombre,
+        correo: nueva.correo,
+        clave: 'cliente123',
+        rol: 'Cliente (Reserva)',
+        telefono: nueva.telefono || '',
+        comprasRealizadas: 0,
+        origen: 'Reserva de Mesa'
+      });
+      writeStorage(KEYS.USUARIOS, usuarios);
+    }
+  } catch (err) {
+    console.warn('Error al vincular usuario de reserva:', err.message);
+  }
+
   // Sincronización con Supabase si las credenciales están presentes
   if (isSupabaseConfigured && supabase) {
     try {

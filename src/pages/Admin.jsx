@@ -342,6 +342,66 @@ export default function Admin() {
                   </table>
                 </div>
               </div>
+
+              {/* Directorio de Clientes que hicieron Reservas */}
+              <div className="card bg-card border-secondary border-opacity-25 p-4 shadow-sm mt-4">
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <div>
+                    <h3 className="h5 brand-font text-warning mb-0">CLIENTES POR RESERVAS (CONTACTO GMAIL)</h3>
+                    <small className="text-muted">Registro de usuarios para contacto directo del dueño/administrador</small>
+                  </div>
+                  <span className="badge bg-warning text-dark font-monospace">{reservas.length} registrados</span>
+                </div>
+
+                <div className="table-responsive">
+                  <table className="table table-dark table-hover table-sm align-middle mb-0">
+                    <thead className="table-secondary small text-uppercase">
+                      <tr>
+                        <th>Nombre Cliente</th>
+                        <th>Correo Gmail</th>
+                        <th>Teléfono</th>
+                        <th>Reserva</th>
+                        <th className="text-center">Acción Directa</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {reservas.length === 0 ? (
+                        <tr>
+                          <td colSpan="5" className="text-center text-muted py-3">
+                            No hay clientes con reservas registradas aún.
+                          </td>
+                        </tr>
+                      ) : (
+                        reservas.map(r => (
+                          <tr key={r.id}>
+                            <td>
+                              <strong className="text-light">{r.nombre}</strong>
+                            </td>
+                            <td>
+                              <span className="text-info font-monospace small">{r.correo}</span>
+                            </td>
+                            <td className="small text-muted">{r.telefono || 'N/A'}</td>
+                            <td className="small">
+                              <span className="badge bg-secondary me-1 font-monospace">{r.codigo}</span>
+                              {r.fecha} ({r.personas} pers.)
+                            </td>
+                            <td className="text-center">
+                              <a
+                                href={`mailto:${r.correo}?subject=Contacto%20Restaurante%20Bistro%20-%20Reserva%20${r.codigo}`}
+                                className="btn btn-outline-warning btn-sm py-0 px-2 fw-semibold"
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                Escribir a Gmail
+                              </a>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
 
             <div className="col-lg-4">
@@ -860,7 +920,18 @@ export default function Admin() {
                       <tr key={r.id}>
                         <td><span className="badge bg-warning text-dark font-monospace">{r.codigo}</span></td>
                         <td><strong>{r.nombre}</strong></td>
-                        <td className="small text-muted">{r.correo}<br />Tel: {r.telefono}</td>
+                        <td className="small text-muted">
+                          <a
+                            href={`mailto:${r.correo}?subject=BISTRO%20Restaurante%20-%20Reserva%20${r.codigo}`}
+                            className="text-info text-decoration-none fw-semibold d-block"
+                            title="Escribir por Gmail"
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {r.correo}
+                          </a>
+                          <small>Tel: {r.telefono || 'N/A'}</small>
+                        </td>
                         <td className="small"><strong>{r.fecha}</strong> a las {r.hora} hrs</td>
                         <td className="text-center fw-bold">{r.personas}</td>
                         <td className="small">

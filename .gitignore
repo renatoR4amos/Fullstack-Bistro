@@ -3,6 +3,7 @@ node_modules/
 dist/
 dist-ssr/
 *.local
+*.zip
 
 # Archivos de documentación y scripts de generación de informes (entrega directa al docente)
 docs/
